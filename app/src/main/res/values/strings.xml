@@ -2,4 +2,11 @@
     <string name="app_name">MyBeer</string>
     <string name="splash_error_permission_denied">Para usar la aplicación debe tener la localización activada</string>
     <string name="splash_error_permission_retry">Reintentar</string>
+
+    <string name="register_user_error_empty_fields">Error, campos vaciós</string>
+    <string name="register_user_error_user_already_exist">Error, el usuario ya existe</string>
+    <string name="register_user_error_user_not_exist">Error, el usuario no existe</string>
+    <string name="register_user_error_server_error">Error en el servidor</string>
+    <string name="register_user_error_invalid_email">Error formato EMAIL no válido</string>
+
 </resources>

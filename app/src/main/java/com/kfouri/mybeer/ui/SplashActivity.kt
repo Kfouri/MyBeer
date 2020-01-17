@@ -60,7 +60,7 @@ class SplashActivity : AppCompatActivity() {
                 PrefsHelper.write(PrefsHelper.LAT, location?.latitude?.let { it } ?: 0.0)
                 PrefsHelper.write(PrefsHelper.LON, location?.longitude?.let { it } ?: 0.0)
                 Handler().postDelayed({
-                    if (!PrefsHelper.read(PrefsHelper.BEARER,"").isNullOrBlank()) {
+                    if (!PrefsHelper.read(PrefsHelper.TOKEN,"").isNullOrBlank()) {
                         startActivity(Intent(this@SplashActivity, MainActivity::class.java))
                     } else {
                     startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
