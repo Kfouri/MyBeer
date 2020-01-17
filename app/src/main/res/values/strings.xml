@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MyBeer</string>
+    <string name="splash_error_permission_denied">Para usar la aplicación debe tener la localización activada</string>
+    <string name="splash_error_permission_retry">Reintentar</string>
+</resources>
