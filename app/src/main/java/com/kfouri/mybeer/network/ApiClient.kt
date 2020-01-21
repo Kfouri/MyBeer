@@ -14,7 +14,7 @@ object RetrofitClient {
 
         val client = OkHttpClient.Builder().addInterceptor { chain ->
             val newRequest = chain.request().newBuilder()
-                .addHeader("Authorization", "Bearer " + PrefsHelper.read(PrefsHelper.BEARER, ""))
+                .addHeader("Authorization", "Bearer " + PrefsHelper.read(PrefsHelper.TOKEN, ""))
                 .build()
             chain.proceed(newRequest)
         }.build()

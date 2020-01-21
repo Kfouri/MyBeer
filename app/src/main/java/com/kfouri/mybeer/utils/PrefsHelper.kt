@@ -11,7 +11,10 @@ object PrefsHelper {
 
     const val LAT = "lat"
     const val LON = "lon"
-    const val BEARER = "bearer"
+    const val ID = "id"
+    const val EMAIL = "email"
+    const val NAME = "name"
+    const val TOKEN = "token"
 
     fun init(context: Context) {
         prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -49,6 +52,14 @@ object PrefsHelper {
         val prefsEditor: SharedPreferences.Editor = prefs.edit()
         with(prefsEditor) {
             putLong(key, java.lang.Double.doubleToRawLongBits(value))
+            commit()
+        }
+    }
+
+    fun write(key: String, value: Int) {
+        val prefsEditor: SharedPreferences.Editor = prefs.edit()
+        with(prefsEditor) {
+            putInt(key, value)
             commit()
         }
     }
