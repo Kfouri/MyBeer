@@ -10,20 +10,14 @@ import com.kfouri.mybeer.viewmodels.RegisterUserViewModel
 
 class RegisterUserActivity : BaseActivity() {
 
-    private lateinit var viewModel: RegisterUserViewModel
     private lateinit var binding: ActivityRegisterUserBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(RegisterUserViewModel::class.java)
-        viewModel.onStartActivity().observe(this, Observer { startActivityModel(it) })
-        viewModel.onShowSnackBar().observe(this, Observer { showSnackBar(it) })
-        viewModel.onHideKeyboard().observe(this, Observer { hideKeyboard() })
-        viewModel.onShowToast().observe(this, Observer { showToast(it) })
-        viewModel.onCloseActivity().observe(this, Observer { closeActivity() })
-
+        subscribe()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_register_user)
-        binding.viewmodel = viewModel
+        binding.viewmodel = viewModel as RegisterUserViewModel
         binding.lifecycleOwner = this
     }
 }
