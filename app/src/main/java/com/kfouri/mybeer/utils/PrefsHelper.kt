@@ -15,6 +15,7 @@ object PrefsHelper {
     const val EMAIL = "email"
     const val NAME = "name"
     const val TOKEN = "token"
+    const val REMEMBER = "remember"
 
     fun init(context: Context) {
         prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -30,6 +31,10 @@ object PrefsHelper {
 
     fun read(key: String, value: Double): Double {
         return java.lang.Double.longBitsToDouble(read(key, java.lang.Double.doubleToRawLongBits(value)))
+    }
+
+    fun read(key: String, value: Boolean): Boolean {
+        return prefs.getBoolean(key, value)
     }
 
     fun write(key: String, value: String) {
@@ -60,6 +65,14 @@ object PrefsHelper {
         val prefsEditor: SharedPreferences.Editor = prefs.edit()
         with(prefsEditor) {
             putInt(key, value)
+            commit()
+        }
+    }
+
+    fun write(key: String, value: Boolean) {
+        val prefsEditor: SharedPreferences.Editor = prefs.edit()
+        with(prefsEditor) {
+            putBoolean(key, value)
             commit()
         }
     }

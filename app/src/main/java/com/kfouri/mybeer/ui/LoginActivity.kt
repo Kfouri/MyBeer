@@ -17,7 +17,17 @@ class LoginActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
         viewModel.onStartActivity().observe(this, Observer { startActivityModel(it) })
+        viewModel.onShowSnackBar().observe(this, Observer { showSnackBar(it) })
+        viewModel.onHideKeyboard().observe(this, Observer { hideKeyboard() })
+        viewModel.onShowToast().observe(this, Observer { showToast(it) })
+        viewModel.onCloseActivity().observe(this, Observer { closeActivity() })
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         binding.viewmodel = viewModel
+        binding.lifecycleOwner = this
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.setView()
     }
 }

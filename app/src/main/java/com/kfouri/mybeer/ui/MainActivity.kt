@@ -12,6 +12,7 @@ import com.kfouri.mybeer.network.ApiUtils
 import com.kfouri.mybeer.network.model.BarBody
 import com.kfouri.mybeer.network.model.BarModel
 import com.kfouri.mybeer.utils.PrefsHelper
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,6 +25,10 @@ class MainActivity : AppCompatActivity() {
         mAPIService = ApiUtils.apiService
 
         getBars()
+
+        button_logout.setOnClickListener {
+            PrefsHelper.write(PrefsHelper.REMEMBER, false)
+        }
     }
 
     private fun getBars() {

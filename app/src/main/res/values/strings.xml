@@ -9,4 +9,6 @@
     <string name="register_user_error_server_error">Error en el servidor</string>
     <string name="register_user_error_invalid_email">Error formato EMAIL no válido</string>
 
+    <string name="login_error_email_password_incorrect">Usuario o clave incorrecto</string>
+
 </resources>
