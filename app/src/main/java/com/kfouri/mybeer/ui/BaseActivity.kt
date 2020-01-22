@@ -7,8 +7,12 @@ import com.google.android.material.snackbar.Snackbar
 import com.kfouri.mybeer.model.ActivityModel
 import com.kfouri.mybeer.model.SnackBarModel
 import com.kfouri.mybeer.utils.Utils
+import com.kfouri.mybeer.viewmodels.BaseViewModel
+import androidx.lifecycle.Observer
 
 open class BaseActivity : AppCompatActivity() {
+
+    lateinit var viewModel: BaseViewModel
 
     fun startActivityModel(activityModel: ActivityModel) {
         activityModel.bundle?.let {
@@ -20,6 +24,15 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
+    fun subscribe() {
+        viewModel.onStartActivity().observe(this, Observer { startActivityModel(it) })
+        viewModel.onShowSnackBar().observe(this, Observer { showSnackBar(it) })
+        viewModel.onHideKeyboard().observe(this, Observer { hideKeyboard() })
+        viewModel.onShowToast().observe(this, Observer { showToast(it) })
+        viewModel.onCloseActivity().observe(this, Observer { closeActivity() })
+
+
+    }
     fun hideKeyboard() {
         Utils.hideKeyboard(this)
     }
