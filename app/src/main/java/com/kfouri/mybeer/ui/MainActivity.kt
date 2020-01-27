@@ -1,65 +1,62 @@
 package com.kfouri.mybeer.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.view.Menu
+import android.widget.SearchView
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.kfouri.mybeer.R
-import rx.Subscriber
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
-import com.kfouri.mybeer.network.APIService
-import com.kfouri.mybeer.network.ApiUtils
-import com.kfouri.mybeer.network.model.BarBody
+import com.kfouri.mybeer.adapters.BarAdapter
+import com.kfouri.mybeer.databinding.ActivityMainBinding
 import com.kfouri.mybeer.network.model.BarModel
-import com.kfouri.mybeer.utils.PrefsHelper
-import kotlinx.android.synthetic.main.activity_main.*
+import com.kfouri.mybeer.viewmodels.MainViewModel
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
-    private var mAPIService: APIService? = null
+    private lateinit var binding: ActivityMainBinding
+    private val adapter = BarAdapter()
+    private val DEFAULT_RADIUS = 10000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        subscribe()
+        (viewModel as MainViewModel).onBarList().observe(this, Observer { getBarList(it) })
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.viewmodel = viewModel as MainViewModel
+        binding.lifecycleOwner = this
 
-        mAPIService = ApiUtils.apiService
-
-        getBars()
-
-        button_logout.setOnClickListener {
-            PrefsHelper.write(PrefsHelper.REMEMBER, false)
-        }
+        val recyclerView = binding.recyclerViewBars
+        recyclerView.setHasFixedSize(true)
+        recyclerView.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
+        recyclerView.adapter = adapter
+        (viewModel as MainViewModel).getBars(DEFAULT_RADIUS)
     }
 
-    private fun getBars() {
+    private fun getBarList(list: ArrayList<BarModel>) {
+        adapter.setData(list)
+    }
 
-        val lat = PrefsHelper.read(PrefsHelper.LAT, 0.0).toString()
-        val lon = PrefsHelper.read(PrefsHelper.LON, 0.0).toString()
-        val radius = "500"
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
-        // RxJava
-        mAPIService?.getBars(BarBody(lat, lon, radius))
-            ?.subscribeOn(Schedulers.io())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribe(object : Subscriber<List<BarModel>>() {
-                override fun onCompleted() {
-                    Log.d("Kfouri", "Complete")
-                }
+        menuInflater.inflate(R.menu.bar_menu, menu)
 
-                override fun onError(e: Throwable) {
-                    Log.d("Kfouri", "error "+e.message)
-                }
+        val searchItem = menu?.findItem(R.id.action_search)
+        val searchView = searchItem?.actionView as SearchView
 
-                override fun onNext(bars: List<BarModel>) {
-                    for (bar in bars) {
-                        Log.d("Kfouri", "Nombre: "+bar.nombre)
-                        bar.servicios?.let {
-                            for (servicio in it) {
-                                Log.d("Kfouri", "Servicio: "+servicio.descripcion)
-                            }
-                        }
-                    }
-                }
-            })
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter.filter(newText)
+                return true
+            }
+        })
+        return super.onCreateOptionsMenu(menu)
     }
 }

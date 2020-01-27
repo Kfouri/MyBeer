@@ -14,7 +14,15 @@ open class BaseActivity : AppCompatActivity() {
 
     lateinit var viewModel: BaseViewModel
 
-    fun startActivityModel(activityModel: ActivityModel) {
+    fun subscribe() {
+        viewModel.onStartActivity().observe(this, Observer { startActivityModel(it) })
+        viewModel.onShowSnackBar().observe(this, Observer { showSnackBar(it) })
+        viewModel.onHideKeyboard().observe(this, Observer { hideKeyboard() })
+        viewModel.onShowToast().observe(this, Observer { showToast(it) })
+        viewModel.onCloseActivity().observe(this, Observer { closeActivity() })
+    }
+
+    private fun startActivityModel(activityModel: ActivityModel) {
         activityModel.bundle?.let {
             startActivity(Intent(this, activityModel.activity))
         } ?: run {
@@ -24,30 +32,21 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
-    fun subscribe() {
-        viewModel.onStartActivity().observe(this, Observer { startActivityModel(it) })
-        viewModel.onShowSnackBar().observe(this, Observer { showSnackBar(it) })
-        viewModel.onHideKeyboard().observe(this, Observer { hideKeyboard() })
-        viewModel.onShowToast().observe(this, Observer { showToast(it) })
-        viewModel.onCloseActivity().observe(this, Observer { closeActivity() })
-
-
-    }
-    fun hideKeyboard() {
+    private fun hideKeyboard() {
         Utils.hideKeyboard(this)
     }
 
-    fun showSnackBar(snackBarModel: SnackBarModel) {
+    private fun showSnackBar(snackBarModel: SnackBarModel) {
         val snackbar = Snackbar
             .make(window.decorView.rootView, snackBarModel.text, Snackbar.LENGTH_LONG)
         snackbar.show()
     }
 
-    fun showToast(text: Int) {
+    private fun showToast(text: Int) {
         Toast.makeText(this, getString(text), Toast.LENGTH_LONG).show()
     }
 
-    fun closeActivity() {
+    private fun closeActivity() {
         finish()
     }
 }
