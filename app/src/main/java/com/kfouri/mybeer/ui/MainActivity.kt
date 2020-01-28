@@ -1,65 +1,100 @@
 package com.kfouri.mybeer.ui
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
+import android.view.Menu
+import android.view.View
+import android.widget.SearchView
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.kfouri.mybeer.R
-import rx.Subscriber
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
-import com.kfouri.mybeer.network.APIService
-import com.kfouri.mybeer.network.ApiUtils
-import com.kfouri.mybeer.network.model.BarBody
+import com.kfouri.mybeer.adapters.BarAdapter
+import com.kfouri.mybeer.databinding.ActivityMainBinding
 import com.kfouri.mybeer.network.model.BarModel
 import com.kfouri.mybeer.utils.PrefsHelper
+import com.kfouri.mybeer.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
-    private var mAPIService: APIService? = null
+    private lateinit var binding: ActivityMainBinding
+    private val adapter = BarAdapter()
+    private val DEFAULT_RADIUS = 30
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        subscribe()
+        (viewModel as MainViewModel).onBarList().observe(this, Observer { getBarList(it) })
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.viewmodel = viewModel as MainViewModel
+        binding.lifecycleOwner = this
 
-        mAPIService = ApiUtils.apiService
-
+        val recyclerView = binding.recyclerViewBars
+        recyclerView.setHasFixedSize(true)
+        recyclerView.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
+        recyclerView.adapter = adapter
         getBars()
+        adapter.registerAdapterDataObserver(object : AdapterDataObserver() {
+            override fun onChanged() {
+                super.onChanged()
+                val cnt = adapter.itemCount
+                textView_listCount.text = getString(R.string.main_activity_bar_found, cnt.toString())
+                textView_emptyList.visibility = if (cnt > 0) View.GONE else View.VISIBLE
+            }
+        })
 
-        button_logout.setOnClickListener {
-            PrefsHelper.write(PrefsHelper.REMEMBER, false)
+        textView_setRadius.setOnClickListener {
+            setupDialog()
         }
     }
 
+    private fun getBarList(list: ArrayList<BarModel>) {
+        adapter.setData(list)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menuInflater.inflate(R.menu.bar_menu, menu)
+
+        val searchItem = menu?.findItem(R.id.action_search)
+        val searchView = searchItem?.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter.filter(newText)
+                return true
+            }
+        })
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun setupDialog() {
+
+        val kms = arrayOf("1", "2", "5", "10", "20", "30", "50", "100")
+
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.main_activity_dialog_title))
+            .setIcon(R.drawable.beer_icon)
+
+        builder.setItems(kms) { _, which ->
+            PrefsHelper.write(PrefsHelper.RADIUS, kms[which].toInt())
+            getBars()
+        }
+        builder.setNegativeButton(getString(R.string.cancel), null)
+        builder.show()
+    }
+
     private fun getBars() {
-
-        val lat = PrefsHelper.read(PrefsHelper.LAT, 0.0).toString()
-        val lon = PrefsHelper.read(PrefsHelper.LON, 0.0).toString()
-        val radius = "500"
-
-        // RxJava
-        mAPIService?.getBars(BarBody(lat, lon, radius))
-            ?.subscribeOn(Schedulers.io())
-            ?.observeOn(AndroidSchedulers.mainThread())
-            ?.subscribe(object : Subscriber<List<BarModel>>() {
-                override fun onCompleted() {
-                    Log.d("Kfouri", "Complete")
-                }
-
-                override fun onError(e: Throwable) {
-                    Log.d("Kfouri", "error "+e.message)
-                }
-
-                override fun onNext(bars: List<BarModel>) {
-                    for (bar in bars) {
-                        Log.d("Kfouri", "Nombre: "+bar.nombre)
-                        bar.servicios?.let {
-                            for (servicio in it) {
-                                Log.d("Kfouri", "Servicio: "+servicio.descripcion)
-                            }
-                        }
-                    }
-                }
-            })
+        textView_setRadius.text = getString(R.string.main_activity_set_radius, PrefsHelper.read(PrefsHelper.RADIUS, DEFAULT_RADIUS).toString())
+        (viewModel as MainViewModel).getBars(PrefsHelper.read(PrefsHelper.RADIUS, DEFAULT_RADIUS))
     }
 }

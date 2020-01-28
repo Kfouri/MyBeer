@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">MyBeer</string>
+    <string name="cancel">Cancelar</string>
+
     <string name="splash_error_permission_denied">Para usar la aplicación debe tener la localización activada</string>
     <string name="splash_error_permission_retry">Reintentar</string>
 
@@ -10,5 +12,10 @@
     <string name="register_user_error_invalid_email">Error formato EMAIL no válido</string>
 
     <string name="login_error_email_password_incorrect">Usuario o clave incorrecto</string>
+
+    <string name="main_activity_bar_found">Bares encontrados: %1$s</string>
+    <string name="main_activity_empty_list">Lista de bares vacío</string>
+    <string name="main_activity_set_radius">Setear Radio (%1$s Km)</string>
+    <string name="main_activity_dialog_title">Setear Radio en KM</string>
 
 </resources>

@@ -14,5 +14,5 @@ interface APIService {
     fun login(@Body body: LoginBody): Observable<User>
 
     @POST("getBares.php")
-    fun getBars(@Body body: BarBody): Observable<ArrayList<BarModel>>
+    fun getBars(@Body body: BarBody): Observable<ArrayList<BarModel>?>
 }
