@@ -49,6 +49,7 @@ class RegisterUserViewModel : BaseViewModel() {
                             Utils.getErrorBody(e)?.let {
                                 showToast(getErrorText(it.code))
                             } ?: showToast(getErrorText("99"))
+                            hideLoading()
                         }
                         override fun onNext(user: User) {
                             PrefsHelper.write(PrefsHelper.EMAIL, user.email)
