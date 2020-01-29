@@ -6,6 +6,7 @@ data class BarModel (
     @SerializedName("id") val id : Int,
     @SerializedName("nombre") val nombre : String,
     @SerializedName("direccion") val direccion : String,
+    @SerializedName("ciudad") val ciudad : String?,
     @SerializedName("lat") val lat : Double,
     @SerializedName("lon") val lon : Double,
     @SerializedName("logo") val logo : String,

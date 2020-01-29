@@ -18,7 +18,6 @@ class MainViewModel : BaseViewModel() {
     private var barsList = ArrayList<BarModel>()
 
     var barList = MutableLiveData<ArrayList<BarModel>>()
-    var isBarsEmpty = MutableLiveData<Int>()
 
     init {
         mAPIService = ApiUtils.apiService
@@ -28,8 +27,6 @@ class MainViewModel : BaseViewModel() {
         val lat = PrefsHelper.read(PrefsHelper.LAT, 0.0).toString()
         val lon = PrefsHelper.read(PrefsHelper.LON, 0.0).toString()
 
-        isBarsEmpty.value = 8
-
         mAPIService?.getBars(BarBody(lat, lon, radius.toString()))
             ?.subscribeOn(Schedulers.io())
             ?.observeOn(AndroidSchedulers.mainThread())
@@ -38,11 +35,6 @@ class MainViewModel : BaseViewModel() {
             ?.subscribe(object : Subscriber<ArrayList<BarModel>>() {
                 override fun onCompleted() {
                     barList.value = barsList
-                    if (barsList.size > 0) {
-                        isBarsEmpty.value = 8
-                    } else {
-                        isBarsEmpty.value = 0
-                    }
                 }
 
                 override fun onError(e: Throwable) {

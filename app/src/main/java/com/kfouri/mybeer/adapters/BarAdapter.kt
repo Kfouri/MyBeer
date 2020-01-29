@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.kfouri.mybeer.R
 import com.kfouri.mybeer.network.model.BarModel
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.bar_item.view.*
 
 class BarAdapter : RecyclerView.Adapter<BarAdapter.ViewHolder>(), Filterable {
@@ -42,12 +41,14 @@ class BarAdapter : RecyclerView.Adapter<BarAdapter.ViewHolder>(), Filterable {
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
         val textViewName = view.textView_name
         val textViewAddress = view.textView_address
+        val textViewCity = view.textView_city
         val textViewDistance = view.textView_distance
         val logo = view.imageView_logo
 
         fun bind(bar: BarModel){
             textViewName.text = bar.nombre
             textViewAddress.text = bar.direccion
+            textViewCity.text = bar.ciudad
             textViewDistance.text = bar.distance.toString() + " Km"
 
             itemView.setOnClickListener { Log.d("Kfouri", "Click")}

@@ -16,6 +16,7 @@ object PrefsHelper {
     const val NAME = "name"
     const val TOKEN = "token"
     const val REMEMBER = "remember"
+    const val RADIUS = "radius"
 
     fun init(context: Context) {
         prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -27,6 +28,10 @@ object PrefsHelper {
 
     fun read(key: String, value: Long): Long {
         return prefs.getLong(key, value)
+    }
+
+    fun read(key: String, value: Int): Int {
+        return prefs.getInt(key, value)
     }
 
     fun read(key: String, value: Double): Double {
