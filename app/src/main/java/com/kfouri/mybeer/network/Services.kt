@@ -15,4 +15,8 @@ interface APIService {
 
     @POST("getBares.php")
     fun getBars(@Body body: BarBody): Observable<ArrayList<BarModel>?>
+
+    @POST("addBar.php")
+    fun addBar(@Body body: AddBarBody): Observable<AddBarResponse>
+
 }

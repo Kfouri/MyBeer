@@ -4,15 +4,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kfouri.mybeer.model.ActivityModel
 import com.kfouri.mybeer.model.SnackBarModel
+import com.kfouri.mybeer.network.APIService
+import com.kfouri.mybeer.network.ApiUtils
 
 open class BaseViewModel : ViewModel() {
 
+    var mAPIService: APIService? = null
     var startActivity = MutableLiveData<ActivityModel>()
     var showSnackBar = MutableLiveData<SnackBarModel>()
     var hideKeyboard = MutableLiveData<Unit>()
     var showToast = MutableLiveData<Int>()
     var progress = MutableLiveData<Int>()
     var closeActivity = MutableLiveData<Unit>()
+
+    init {
+        hideLoading()
+        mAPIService = ApiUtils.apiService
+    }
 
     fun showLoading() {
         progress.value = 0
