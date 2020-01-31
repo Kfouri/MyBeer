@@ -38,7 +38,7 @@ class MainActivity : BaseActivity() {
         recyclerView.setHasFixedSize(true)
         recyclerView.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
         recyclerView.adapter = adapter
-        getBars()
+
         adapter.registerAdapterDataObserver(object : AdapterDataObserver() {
             override fun onChanged() {
                 super.onChanged()
@@ -51,6 +51,11 @@ class MainActivity : BaseActivity() {
         textView_setRadius.setOnClickListener {
             setupDialog()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getBars()
     }
 
     private fun getBarList(list: ArrayList<BarModel>) {

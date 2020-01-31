@@ -2,10 +2,10 @@ package com.kfouri.mybeer.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import com.kfouri.mybeer.R
-import com.kfouri.mybeer.network.APIService
-import com.kfouri.mybeer.network.ApiUtils
+import com.kfouri.mybeer.model.ActivityModel
 import com.kfouri.mybeer.network.model.BarBody
 import com.kfouri.mybeer.network.model.BarModel
+import com.kfouri.mybeer.ui.AddBarActivity
 import com.kfouri.mybeer.utils.PrefsHelper
 import com.kfouri.mybeer.utils.Utils
 import rx.Subscriber
@@ -14,14 +14,9 @@ import rx.schedulers.Schedulers
 
 class MainViewModel : BaseViewModel() {
 
-    private var mAPIService: APIService? = null
     private var barsList = ArrayList<BarModel>()
 
     var barList = MutableLiveData<ArrayList<BarModel>>()
-
-    init {
-        mAPIService = ApiUtils.apiService
-    }
 
     fun getBars(radius: Int) {
         val lat = PrefsHelper.read(PrefsHelper.LAT, 0.0).toString()
@@ -60,5 +55,9 @@ class MainViewModel : BaseViewModel() {
             "02" -> R.string.login_error_email_password_incorrect //No authorizated
             else -> R.string.register_user_error_server_error
         }
+    }
+
+    fun onClickAddBar() {
+        showActivity(ActivityModel(AddBarActivity::class.java))
     }
 }

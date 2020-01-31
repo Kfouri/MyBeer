@@ -14,13 +14,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.BaseActivity"></activity>
+        <activity android:name=".ui.AddBarActivity"></activity>
+        <activity android:name=".ui.BaseActivity" />
         <activity
             android:name=".ui.RegisterUserActivity"
-            android:windowSoftInputMode="stateVisible"/>
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".ui.LoginActivity"
-            android:launchMode="singleTask"/>
+            android:launchMode="singleTask" />
         <activity android:name=".ui.MainActivity" />
         <activity
             android:name=".ui.SplashActivity"

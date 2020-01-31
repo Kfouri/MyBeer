@@ -3,8 +3,6 @@ package com.kfouri.mybeer.viewmodels
 import androidx.databinding.ObservableField
 import com.kfouri.mybeer.R
 import com.kfouri.mybeer.model.ActivityModel
-import com.kfouri.mybeer.network.APIService
-import com.kfouri.mybeer.network.ApiUtils
 import com.kfouri.mybeer.network.model.LoginBody
 import com.kfouri.mybeer.network.model.User
 import com.kfouri.mybeer.ui.MainActivity
@@ -18,16 +16,9 @@ import rx.schedulers.Schedulers
 
 class LoginViewModel : BaseViewModel() {
 
-    private var mAPIService: APIService? = null
-
     var emailField = ObservableField<String>()
     var passwordField = ObservableField<String>()
     var rememberField = ObservableField<Boolean>()
-
-    init {
-        hideLoading()
-        mAPIService = ApiUtils.apiService
-    }
 
     fun setView() {
         val email = PrefsHelper.read(PrefsHelper.EMAIL, "").toString()

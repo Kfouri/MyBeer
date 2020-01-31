@@ -18,4 +18,15 @@
     <string name="main_activity_set_radius">Setear Radio (%1$s Km)</string>
     <string name="main_activity_dialog_title">Setear Radio en KM</string>
 
+    <string name="add_bar_error">Error al crear el Bar</string>
+    <string name="add_bar_get_position_empty_fields">Faltan datos (Dirección/Ciudad/País)</string>
+    <string name="add_bar_name">Nombre</string>
+    <string name="add_bar_address">Dirección</string>
+    <string name="add_bar_city">Ciudad</string>
+    <string name="add_bar_country">País</string>
+    <string name="add_bar_lat">Latitud</string>
+    <string name="add_bar_lon">Longitud</string>
+    <string name="add_bar_get_position">Obtener Posición</string>
+    <string name="add_bar_create">Crear Bar</string>
+    <string name="add_bar_error_get_position">Error al obtener posición</string>
 </resources>

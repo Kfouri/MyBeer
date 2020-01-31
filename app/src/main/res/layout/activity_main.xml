@@ -36,6 +36,7 @@
                     android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:textColor="#FFFFFF"
+                    android:text="Bares encontrados: 0"
                     tools:text="Set Radius (10 Km)"/>
 
                 <View
@@ -70,7 +71,20 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayoutMain" />
+                app:layout_constraintTop_toBottomOf="@+id/linearLayoutMain"
+                android:paddingBottom="80dp"
+                android:clipToPadding="false"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_addBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_add"
+                android:onClick="@{() -> viewmodel.onClickAddBar()}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -95,5 +109,6 @@
                 android:layout_centerInParent="true"
                 android:visibility="@{viewmodel.progress}" />
         </RelativeLayout>
+
     </FrameLayout>
 </layout>

@@ -3,8 +3,6 @@ package com.kfouri.mybeer.viewmodels
 import androidx.databinding.ObservableField
 import com.kfouri.mybeer.R
 import com.kfouri.mybeer.model.ActivityModel
-import com.kfouri.mybeer.network.APIService
-import com.kfouri.mybeer.network.ApiUtils
 import com.kfouri.mybeer.network.model.CreateUserBody
 import com.kfouri.mybeer.network.model.User
 import com.kfouri.mybeer.ui.LoginActivity
@@ -17,16 +15,9 @@ import rx.schedulers.Schedulers
 
 class RegisterUserViewModel : BaseViewModel() {
 
-    private var mAPIService: APIService? = null
-
     var emailField = ObservableField<String>()
     var passwordField = ObservableField<String>()
     var nameField = ObservableField<String>()
-
-    init {
-        hideLoading()
-        mAPIService = ApiUtils.apiService
-    }
 
     fun onClickCreate() {
         hideKeyboard()
