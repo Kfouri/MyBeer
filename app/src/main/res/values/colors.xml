@@ -6,4 +6,5 @@
     <color name="background_progress">#88000000</color>
 
     <color name="divider">#22000000</color>
+    <color name="white">#FFFFFF</color>
 </resources>
