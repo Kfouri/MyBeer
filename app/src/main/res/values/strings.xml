@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">MyBeer</string>
     <string name="cancel">Cancelar</string>
 
@@ -26,7 +27,9 @@
     <string name="add_bar_country">País</string>
     <string name="add_bar_lat">Latitud</string>
     <string name="add_bar_lon">Longitud</string>
-    <string name="add_bar_get_position">Obtener Posición</string>
+    <string name="add_bar_find_in_map">Buscarlo en el mapa</string>
     <string name="add_bar_create">Crear Bar</string>
     <string name="add_bar_error_get_position">Error al obtener posición</string>
+    <string name="add_bar_done">Aceptar</string>
+
 </resources>

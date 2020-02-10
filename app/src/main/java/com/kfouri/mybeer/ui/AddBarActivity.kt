@@ -1,17 +1,16 @@
 package com.kfouri.mybeer.ui
 
-import android.location.Geocoder
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.kfouri.mybeer.R
 import com.kfouri.mybeer.databinding.ActivityAddBarBinding
 import com.kfouri.mybeer.viewmodels.AddBarViewModel
+import com.kfouri.mybeer.viewmodels.FIND_IN_MAP_RESULT_CODE
 import kotlinx.android.synthetic.main.activity_add_bar.*
-import java.io.IOException
 
 class AddBarActivity : BaseActivity() {
 
@@ -21,7 +20,6 @@ class AddBarActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(AddBarViewModel::class.java)
         subscribe()
-        (viewModel as AddBarViewModel).onGetLocationFromAddress().observe(this, Observer { getLocationFromAddress(it) })
         binding = DataBindingUtil.setContentView(this, R.layout.activity_add_bar)
         binding.viewmodel = viewModel as AddBarViewModel
         binding.lifecycleOwner = this
@@ -33,23 +31,22 @@ class AddBarActivity : BaseActivity() {
         return true
     }
 
-    private fun getLocationFromAddress(strAddress: String) {
-        val coder = Geocoder(this)
-        val address = coder.getFromLocationName(strAddress,5)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == FIND_IN_MAP_RESULT_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                val address: String = data?.getStringExtra(POSITION_ADDRESS) ?: ""
+                val city: String = data?.getStringExtra(POSITION_CITY) ?: ""
+                val country: String = data?.getStringExtra(POSITION_COUNTRY) ?: ""
+                val lat: Double = data?.getDoubleExtra(POSITION_LAT, 0.0) ?: 0.0
+                val lon: Double = data?.getDoubleExtra(POSITION_LON, 0.0) ?: 0.0
 
-        editText_lat.text = Editable.Factory.getInstance().newEditable("")
-        editText_lon.text = Editable.Factory.getInstance().newEditable("")
-
-        try {
-            if (address != null && address.size > 0) {
-                val location = address[0]
-                editText_lat.text = Editable.Factory.getInstance().newEditable(String.format("%.8f", location?.latitude))
-                editText_lon.text = Editable.Factory.getInstance().newEditable(String.format("%.8f", location?.longitude))
-            } else {
-                Toast.makeText(this, getString(R.string.add_bar_error_get_position), Toast.LENGTH_LONG).show()
+                editText_address.text = Editable.Factory.getInstance().newEditable(address)
+                editText_city.text = Editable.Factory.getInstance().newEditable(city)
+                editText_country.text = Editable.Factory.getInstance().newEditable(country)
+                editText_lat.text = Editable.Factory.getInstance().newEditable(String.format("%.8f", lat))
+                editText_lon.text = Editable.Factory.getInstance().newEditable(String.format("%.8f", lon))
             }
-        } catch (ex: IOException) {
-            Toast.makeText(this, getString(R.string.add_bar_error_get_position), Toast.LENGTH_LONG).show()
         }
     }
 }

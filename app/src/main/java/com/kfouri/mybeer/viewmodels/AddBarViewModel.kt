@@ -1,18 +1,19 @@
 package com.kfouri.mybeer.viewmodels
 
 import androidx.databinding.ObservableField
-import androidx.lifecycle.MutableLiveData
 import com.kfouri.mybeer.R
+import com.kfouri.mybeer.model.ActivityModel
 import com.kfouri.mybeer.network.model.AddBarBody
 import com.kfouri.mybeer.network.model.AddBarResponse
+import com.kfouri.mybeer.ui.PositionBarMapActivity
 import com.kfouri.mybeer.utils.Utils
 import rx.Subscriber
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
-class AddBarViewModel : BaseViewModel() {
+const val FIND_IN_MAP_RESULT_CODE = 500
 
-    private var getLocationFromAddress = MutableLiveData<String>()
+class AddBarViewModel : BaseViewModel() {
 
     var nameField = ObservableField<String>()
     var addressField = ObservableField<String>()
@@ -58,14 +59,8 @@ class AddBarViewModel : BaseViewModel() {
         }
     }
 
-    fun onGetPosition() {
-        if (addressField.get().toString() != "null" &&
-            cityField.get().toString() != "null" &&
-            countryField.get().toString() != "null") {
-            getLocationFromAddress.value = addressField.get().toString() + " " + cityField.get().toString() + " " + countryField.get().toString()
-        } else {
-            showToast(getErrorText("02"))
-        }
+    fun onFindBarInMap() {
+        showActivity(ActivityModel(PositionBarMapActivity::class.java, null, FIND_IN_MAP_RESULT_CODE))
     }
 
     fun getErrorText(code: String): Int {
@@ -76,5 +71,4 @@ class AddBarViewModel : BaseViewModel() {
         }
     }
 
-    fun onGetLocationFromAddress() = getLocationFromAddress
 }
