@@ -28,7 +28,7 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:src="@drawable/photo"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="32dp"
                     android:layout_gravity="center"/>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:focusable="true"
                     android:textColorHint="@color/colorPrimary"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginStart="32dp"
                     android:layout_marginEnd="32dp">
                     <com.google.android.material.textfield.TextInputEditText
@@ -49,6 +49,18 @@
                         <requestFocus/>
                     </com.google.android.material.textfield.TextInputEditText>
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/button_getPosition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="32dp"
+                    android:text="@string/add_bar_find_in_map"
+                    android:onClick="@{() -> viewmodel.onFindBarInMap()}"
+                    android:background="@drawable/button_rounded"
+                    android:textColor="#FFFFFF" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -64,6 +76,7 @@
                         android:layout_height="wrap_content"
                         android:text="@={viewmodel.addressField}"
                         android:hint="@string/add_bar_address"
+                        android:enabled="false"
                         android:inputType="textCapWords"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,6 +95,7 @@
                         android:hint="@string/add_bar_city"
                         android:text="@={viewmodel.cityField}"
                         android:inputType="textCapWords"
+                        android:enabled="false"
                         android:maxLines="1"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,20 +114,9 @@
                         android:hint="@string/add_bar_country"
                         android:text="@={viewmodel.countryField}"
                         android:inputType="textCapWords"
+                        android:enabled="false"
                         android:maxLines="1"/>
                 </com.google.android.material.textfield.TextInputLayout>
-
-                <Button
-                    android:id="@+id/button_getPosition"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="32dp"
-                    android:layout_marginEnd="32dp"
-                    android:text="@string/add_bar_get_position"
-                    android:onClick="@{() -> viewmodel.onGetPosition()}"
-                    android:background="@drawable/button_rounded"
-                    android:textColor="#FFFFFF" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -178,6 +181,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/background_progress"
                 android:visibility="@{viewmodel.progress}">
+
                 <ProgressBar
                     android:id="@+id/progressBar"
                     style="?android:attr/progressBarStyle"

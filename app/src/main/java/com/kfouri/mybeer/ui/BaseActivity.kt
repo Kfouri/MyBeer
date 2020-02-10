@@ -24,11 +24,19 @@ open class BaseActivity : AppCompatActivity() {
 
     private fun startActivityModel(activityModel: ActivityModel) {
         activityModel.bundle?.let {
-            startActivity(Intent(this, activityModel.activity))
+            if (activityModel.resultCode > 0) {
+                startActivityForResult(Intent(this, activityModel.activity), activityModel.resultCode)
+            } else {
+                startActivity(Intent(this, activityModel.activity))
+            }
         } ?: run {
             val intent = Intent(this, activityModel.activity)
             activityModel.bundle?.let { intent.putExtras(it) }
-            startActivity(intent)
+            if (activityModel.resultCode > 0) {
+                startActivityForResult(intent, activityModel.resultCode)
+            } else {
+                startActivity(intent)
+            }
         }
     }
 
