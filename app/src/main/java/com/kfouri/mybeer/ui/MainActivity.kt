@@ -1,65 +1,54 @@
 package com.kfouri.mybeer.ui
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.SearchView
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
+import androidx.fragment.app.Fragment
 import com.kfouri.mybeer.R
-import com.kfouri.mybeer.adapters.BarAdapter
-import com.kfouri.mybeer.databinding.ActivityMainBinding
-import com.kfouri.mybeer.network.model.BarModel
-import com.kfouri.mybeer.utils.PrefsHelper
-import com.kfouri.mybeer.viewmodels.MainViewModel
+import com.kfouri.mybeer.ui.fragments.BarFragment
+import com.kfouri.mybeer.ui.fragments.BaseFragment
+import com.kfouri.mybeer.ui.fragments.MapFragment
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : BaseActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-    private val adapter = BarAdapter()
-    private val DEFAULT_RADIUS = 30
+    var searchView : SearchView? = null
+    lateinit var fragment: BaseFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        subscribe()
-        (viewModel as MainViewModel).onBarList().observe(this, Observer { getBarList(it) })
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.viewmodel = viewModel as MainViewModel
-        binding.lifecycleOwner = this
+        setContentView(R.layout.activity_main)
 
-        val recyclerView = binding.recyclerViewBars
-        recyclerView.setHasFixedSize(true)
-        recyclerView.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
-        recyclerView.adapter = adapter
-
-        adapter.registerAdapterDataObserver(object : AdapterDataObserver() {
-            override fun onChanged() {
-                super.onChanged()
-                val cnt = adapter.itemCount
-                textView_listCount.text = getString(R.string.main_activity_bar_found, cnt.toString())
-                textView_emptyList.visibility = if (cnt > 0) View.GONE else View.VISIBLE
+        bottom_navigation.setOnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.navigation_bar -> {
+                    searchView?.visibility = View.VISIBLE
+                    searchView?.setQuery("", false)
+                    searchView?.isIconified = true
+                    fragment = BarFragment.newInstance()
+                    openFragment(fragment)
+                    true
+                }
+                R.id.navigation_map -> {
+                    searchView?.visibility = View.GONE
+                    fragment = MapFragment.newInstance()
+                    openFragment(fragment)
+                    true
+                }
+                else -> false
             }
-        })
-
-        textView_setRadius.setOnClickListener {
-            setupDialog()
         }
+
+        bottom_navigation.selectedItemId = R.id.navigation_bar
     }
 
-    override fun onResume() {
-        super.onResume()
-        getBars()
-    }
-
-    private fun getBarList(list: ArrayList<BarModel>) {
-        adapter.setData(list)
+    private fun openFragment(fragment: Fragment) {
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.main_container, fragment)
+        transaction.commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -67,39 +56,20 @@ class MainActivity : BaseActivity() {
         menuInflater.inflate(R.menu.bar_menu, menu)
 
         val searchItem = menu?.findItem(R.id.action_search)
-        val searchView = searchItem?.actionView as SearchView
+        searchView = searchItem?.actionView as SearchView
 
-        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+        searchView?.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                adapter.filter.filter(newText)
+                if (fragment is BarFragment) {
+                    (fragment as BarFragment).setFilterAdapter(newText)
+                }
                 return true
             }
         })
         return super.onCreateOptionsMenu(menu)
-    }
-
-    private fun setupDialog() {
-
-        val kms = arrayOf("1", "2", "5", "10", "20", "30", "50", "100")
-
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setTitle(getString(R.string.main_activity_dialog_title))
-            .setIcon(R.drawable.beer_icon)
-
-        builder.setItems(kms) { _, which ->
-            PrefsHelper.write(PrefsHelper.RADIUS, kms[which].toInt())
-            getBars()
-        }
-        builder.setNegativeButton(getString(R.string.cancel), null)
-        builder.show()
-    }
-
-    private fun getBars() {
-        textView_setRadius.text = getString(R.string.main_activity_set_radius, PrefsHelper.read(PrefsHelper.RADIUS, DEFAULT_RADIUS).toString())
-        (viewModel as MainViewModel).getBars(PrefsHelper.read(PrefsHelper.RADIUS, DEFAULT_RADIUS))
     }
 }

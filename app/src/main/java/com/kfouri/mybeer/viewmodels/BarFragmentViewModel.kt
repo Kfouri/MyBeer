@@ -12,7 +12,7 @@ import rx.Subscriber
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
-class MainViewModel : BaseViewModel() {
+class BarFragmentViewModel : BaseViewModel() {
 
     private var barsList = ArrayList<BarModel>()
 
