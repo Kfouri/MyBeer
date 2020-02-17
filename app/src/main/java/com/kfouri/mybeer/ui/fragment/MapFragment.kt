@@ -1,4 +1,4 @@
-package com.kfouri.mybeer.ui.fragments
+package com.kfouri.mybeer.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

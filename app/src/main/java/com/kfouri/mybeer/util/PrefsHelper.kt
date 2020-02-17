@@ -1,4 +1,4 @@
-package com.kfouri.mybeer.utils
+package com.kfouri.mybeer.util
 
 import android.content.Context
 import android.content.SharedPreferences

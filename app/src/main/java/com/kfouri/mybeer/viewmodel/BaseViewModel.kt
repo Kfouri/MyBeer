@@ -1,4 +1,4 @@
-package com.kfouri.mybeer.viewmodels
+package com.kfouri.mybeer.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

@@ -1,4 +1,4 @@
-package com.kfouri.mybeer.viewmodels
+package com.kfouri.mybeer.viewmodel
 
 import androidx.databinding.ObservableField
 import com.kfouri.mybeer.R
@@ -6,9 +6,9 @@ import com.kfouri.mybeer.model.ActivityModel
 import com.kfouri.mybeer.network.model.CreateUserBody
 import com.kfouri.mybeer.network.model.User
 import com.kfouri.mybeer.ui.LoginActivity
-import com.kfouri.mybeer.utils.PrefsHelper
-import com.kfouri.mybeer.utils.Utils
-import com.kfouri.mybeer.utils.Utils.isValidEmail
+import com.kfouri.mybeer.util.PrefsHelper
+import com.kfouri.mybeer.util.Utils
+import com.kfouri.mybeer.util.Utils.isValidEmail
 import rx.Subscriber
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers

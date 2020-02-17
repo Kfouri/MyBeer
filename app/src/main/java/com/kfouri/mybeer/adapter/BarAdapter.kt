@@ -1,4 +1,4 @@
-package com.kfouri.mybeer.adapters
+package com.kfouri.mybeer.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -39,23 +39,16 @@ class BarAdapter : RecyclerView.Adapter<BarAdapter.ViewHolder>(), Filterable {
     }
 
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-        val textViewName = view.textView_name
-        val textViewAddress = view.textView_address
-        val textViewCity = view.textView_city
-        val textViewDistance = view.textView_distance
-        val logo = view.imageView_logo
-
         fun bind(bar: BarModel){
-            textViewName.text = bar.nombre
-            textViewAddress.text = bar.direccion
-            textViewCity.text = bar.ciudad
-            textViewDistance.text = bar.distance.toString() + " Km"
-
+            itemView.textView_name.text = bar.nombre
+            itemView.textView_address.text = bar.direccion
+            itemView.textView_city.text = bar.ciudad
+            itemView.textView_distance.text = bar.distance.toString() + " Km"
+            itemView.imageView_logo.loadUrl(bar.logo)
             itemView.setOnClickListener { Log.d("Kfouri", "Click")}
-            logo.loadUrl(bar.logo)
         }
 
-        fun ImageView.loadUrl(url: String) {
+        private fun ImageView.loadUrl(url: String) {
             Glide.with(this)
                 .load(url)
                 .placeholder(R.drawable.beer_icon)

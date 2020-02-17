@@ -12,7 +12,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.kfouri.mybeer.R
-import com.kfouri.mybeer.utils.PrefsHelper
+import com.kfouri.mybeer.util.PrefsHelper
 import kotlinx.android.synthetic.main.activity_position_bar_map.*
 import java.util.*
 

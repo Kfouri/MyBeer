@@ -2,7 +2,9 @@ package com.kfouri.mybeer.network
 
 import com.kfouri.mybeer.network.model.*
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 import rx.Observable
 
 interface APIService {
@@ -19,4 +21,6 @@ interface APIService {
     @POST("addBar.php")
     fun addBar(@Body body: AddBarBody): Observable<AddBarResponse>
 
+    @GET("getUser.php")
+    fun getUser(@Query("token") token: String): Observable<User>
 }

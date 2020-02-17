@@ -3,13 +3,13 @@ package com.kfouri.mybeer.ui
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import com.kfouri.mybeer.R
-import com.kfouri.mybeer.ui.fragments.BarFragment
-import com.kfouri.mybeer.ui.fragments.BaseFragment
-import com.kfouri.mybeer.ui.fragments.MapFragment
+import com.kfouri.mybeer.ui.fragment.BarFragment
+import com.kfouri.mybeer.ui.fragment.BaseFragment
+import com.kfouri.mybeer.ui.fragment.MapFragment
+import com.kfouri.mybeer.ui.fragment.ProfileFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -21,7 +21,10 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        configBottomNavigation()
+    }
 
+    private fun configBottomNavigation() {
         bottom_navigation.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.navigation_bar -> {
@@ -35,6 +38,12 @@ class MainActivity : BaseActivity() {
                 R.id.navigation_map -> {
                     searchView?.visibility = View.GONE
                     fragment = MapFragment.newInstance()
+                    openFragment(fragment)
+                    true
+                }
+                R.id.navigation_profile -> {
+                    searchView?.visibility = View.GONE
+                    fragment = ProfileFragment.newInstance()
                     openFragment(fragment)
                     true
                 }

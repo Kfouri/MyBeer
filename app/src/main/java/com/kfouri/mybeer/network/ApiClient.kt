@@ -1,6 +1,6 @@
 package com.kfouri.mybeer.network
 
-import com.kfouri.mybeer.utils.PrefsHelper
+import com.kfouri.mybeer.util.PrefsHelper
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
