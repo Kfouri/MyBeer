@@ -1,16 +1,16 @@
-package com.kfouri.mybeer.ui
+package com.kfouri.mybeer.ui.fragment
 
 import android.content.Intent
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.kfouri.mybeer.model.ActivityModel
 import com.kfouri.mybeer.model.SnackBarModel
 import com.kfouri.mybeer.util.Utils
 import com.kfouri.mybeer.viewmodel.BaseViewModel
-import androidx.lifecycle.Observer
 
-open class BaseActivity : AppCompatActivity() {
+open class BaseFragment : Fragment() {
 
     lateinit var viewModel: BaseViewModel
 
@@ -25,12 +25,12 @@ open class BaseActivity : AppCompatActivity() {
     private fun startActivityModel(activityModel: ActivityModel) {
         activityModel.bundle?.let {
             if (activityModel.resultCode > 0) {
-                startActivityForResult(Intent(this, activityModel.activity), activityModel.resultCode)
+                startActivityForResult(Intent(activity, activityModel.activity), activityModel.resultCode)
             } else {
-                startActivity(Intent(this, activityModel.activity))
+                startActivity(Intent(activity, activityModel.activity))
             }
         } ?: run {
-            val intent = Intent(this, activityModel.activity)
+            val intent = Intent(activity, activityModel.activity)
             activityModel.bundle?.let { intent.putExtras(it) }
             if (activityModel.resultCode > 0) {
                 startActivityForResult(intent, activityModel.resultCode)
@@ -41,20 +41,22 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     private fun hideKeyboard() {
-        Utils.hideKeyboard(this)
+        activity?.let { Utils.hideKeyboard(it) }
     }
 
     private fun showSnackBar(snackBarModel: SnackBarModel) {
-        val snackbar = Snackbar
-            .make(window.decorView.rootView, snackBarModel.text, Snackbar.LENGTH_LONG)
-        snackbar.show()
+        val snackbar = activity?.window?.decorView?.rootView?.let {
+            Snackbar
+                .make(it, snackBarModel.text, Snackbar.LENGTH_LONG)
+        }
+        snackbar?.show()
     }
 
     private fun showToast(text: Int) {
-        Toast.makeText(this, getString(text), Toast.LENGTH_LONG).show()
+        Toast.makeText(activity, getString(text), Toast.LENGTH_LONG).show()
     }
 
     private fun closeActivity() {
-        finish()
+        activity?.finish()
     }
 }

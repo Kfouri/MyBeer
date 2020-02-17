@@ -9,7 +9,7 @@
         <import type="android.view.View"/>
         <variable
             name="viewmodel"
-            type="com.kfouri.mybeer.viewmodels.BarFragmentViewModel" />
+            type="com.kfouri.mybeer.viewmodel.BarFragmentViewModel" />
     </data>
 
     <FrameLayout

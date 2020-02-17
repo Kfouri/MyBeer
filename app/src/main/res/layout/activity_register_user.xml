@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.kfouri.mybeer.viewmodels.RegisterUserViewModel" />
+            type="com.kfouri.mybeer.viewmodel.RegisterUserViewModel" />
     </data>
     <FrameLayout
         android:layout_width="match_parent"

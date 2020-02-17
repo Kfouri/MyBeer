@@ -13,7 +13,7 @@ import androidx.core.app.ActivityCompat
 import android.content.pm.PackageManager
 import android.os.Handler
 import com.kfouri.mybeer.R
-import com.kfouri.mybeer.utils.PrefsHelper
+import com.kfouri.mybeer.util.PrefsHelper
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_splash.*
 

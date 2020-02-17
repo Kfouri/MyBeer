@@ -7,7 +7,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.kfouri.mybeer.R
 import com.kfouri.mybeer.databinding.ActivityLoginBinding
-import com.kfouri.mybeer.viewmodels.LoginViewModel
+import com.kfouri.mybeer.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseActivity() {

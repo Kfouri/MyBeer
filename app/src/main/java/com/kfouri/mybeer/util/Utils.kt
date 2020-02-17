@@ -1,4 +1,4 @@
-package com.kfouri.mybeer.utils
+package com.kfouri.mybeer.util
 
 import android.app.Activity
 import android.text.TextUtils

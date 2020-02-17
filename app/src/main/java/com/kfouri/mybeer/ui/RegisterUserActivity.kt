@@ -2,11 +2,10 @@ package com.kfouri.mybeer.ui
 
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.kfouri.mybeer.R
 import com.kfouri.mybeer.databinding.ActivityRegisterUserBinding
-import com.kfouri.mybeer.viewmodels.RegisterUserViewModel
+import com.kfouri.mybeer.viewmodel.RegisterUserViewModel
 
 class RegisterUserActivity : BaseActivity() {
 

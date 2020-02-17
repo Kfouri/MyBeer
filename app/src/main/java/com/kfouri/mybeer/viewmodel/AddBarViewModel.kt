@@ -1,4 +1,4 @@
-package com.kfouri.mybeer.viewmodels
+package com.kfouri.mybeer.viewmodel
 
 import androidx.databinding.ObservableField
 import com.kfouri.mybeer.R
@@ -6,7 +6,7 @@ import com.kfouri.mybeer.model.ActivityModel
 import com.kfouri.mybeer.network.model.AddBarBody
 import com.kfouri.mybeer.network.model.AddBarResponse
 import com.kfouri.mybeer.ui.PositionBarMapActivity
-import com.kfouri.mybeer.utils.Utils
+import com.kfouri.mybeer.util.Utils
 import rx.Subscriber
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -66,7 +66,7 @@ class AddBarViewModel : BaseViewModel() {
     fun getErrorText(code: String): Int {
         return when (code) {
             "01" -> R.string.add_bar_error
-            "02" -> R.string.add_bar_get_position_empty_fields
+            "02" -> R.string.login_error_email_password_incorrect //No authorizated
             else -> R.string.register_user_error_server_error
         }
     }

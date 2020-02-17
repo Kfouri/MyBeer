@@ -1,4 +1,4 @@
-package com.kfouri.mybeer.ui.fragments
+package com.kfouri.mybeer.ui.fragment
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kfouri.mybeer.R
-import com.kfouri.mybeer.adapters.BarAdapter
+import com.kfouri.mybeer.adapter.BarAdapter
 import com.kfouri.mybeer.databinding.FragmentBarBinding
 import com.kfouri.mybeer.network.model.BarModel
-import com.kfouri.mybeer.utils.PrefsHelper
-import com.kfouri.mybeer.viewmodels.BarFragmentViewModel
+import com.kfouri.mybeer.util.PrefsHelper
+import com.kfouri.mybeer.viewmodel.BarFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_bar.*
 
 class BarFragment : BaseFragment() {
@@ -32,7 +32,7 @@ class BarFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
         viewModel = ViewModelProviders.of(this).get(BarFragmentViewModel::class.java)
         (viewModel as BarFragmentViewModel).onBarList().observe(this, Observer { getBarList(it) })
-
+        subscribe()
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_bar, container, false)
         binding.viewmodel = viewModel as BarFragmentViewModel
         binding.lifecycleOwner = this

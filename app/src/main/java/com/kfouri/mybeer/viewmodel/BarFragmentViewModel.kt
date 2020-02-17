@@ -1,4 +1,4 @@
-package com.kfouri.mybeer.viewmodels
+package com.kfouri.mybeer.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import com.kfouri.mybeer.R
@@ -6,8 +6,8 @@ import com.kfouri.mybeer.model.ActivityModel
 import com.kfouri.mybeer.network.model.BarBody
 import com.kfouri.mybeer.network.model.BarModel
 import com.kfouri.mybeer.ui.AddBarActivity
-import com.kfouri.mybeer.utils.PrefsHelper
-import com.kfouri.mybeer.utils.Utils
+import com.kfouri.mybeer.util.PrefsHelper
+import com.kfouri.mybeer.util.Utils
 import rx.Subscriber
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers

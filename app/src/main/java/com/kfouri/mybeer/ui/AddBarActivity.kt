@@ -8,8 +8,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
 import com.kfouri.mybeer.R
 import com.kfouri.mybeer.databinding.ActivityAddBarBinding
-import com.kfouri.mybeer.viewmodels.AddBarViewModel
-import com.kfouri.mybeer.viewmodels.FIND_IN_MAP_RESULT_CODE
+import com.kfouri.mybeer.viewmodel.AddBarViewModel
+import com.kfouri.mybeer.viewmodel.FIND_IN_MAP_RESULT_CODE
 import kotlinx.android.synthetic.main.activity_add_bar.*
 
 class AddBarActivity : BaseActivity() {
