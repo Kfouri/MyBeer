@@ -17,6 +17,8 @@ object PrefsHelper {
     const val TOKEN = "token"
     const val REMEMBER = "remember"
     const val RADIUS = "radius"
+    const val MAP_LAT = "map_lat"
+    const val MAP_LON = "map_lon"
 
     fun init(context: Context) {
         prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)

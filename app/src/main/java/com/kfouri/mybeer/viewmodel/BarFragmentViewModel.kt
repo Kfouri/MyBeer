@@ -18,9 +18,7 @@ class BarFragmentViewModel : BaseViewModel() {
 
     var barList = MutableLiveData<ArrayList<BarModel>>()
 
-    fun getBars(radius: Int) {
-        val lat = PrefsHelper.read(PrefsHelper.LAT, 0.0).toString()
-        val lon = PrefsHelper.read(PrefsHelper.LON, 0.0).toString()
+    fun getBars(radius: Int, lat: String, lon: String) {
 
         mAPIService?.getBars(BarBody(lat, lon, radius.toString()))
             ?.subscribeOn(Schedulers.io())
@@ -40,9 +38,7 @@ class BarFragmentViewModel : BaseViewModel() {
                 }
 
                 override fun onNext(bars: ArrayList<BarModel>?) {
-                    if (bars != null) {
-                        barsList = bars
-                    }
+                    barsList = bars ?: ArrayList()
                 }
             })
     }
