@@ -19,11 +19,11 @@ import com.kfouri.mybeer.util.PrefsHelper
 import com.kfouri.mybeer.viewmodel.BarFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_bar.*
 
+const val DEFAULT_RADIUS = 30
 class BarFragment : BaseFragment() {
 
     private lateinit var binding: FragmentBarBinding
     private val adapter = BarAdapter()
-    private val DEFAULT_RADIUS = 30
 
     companion object {
         fun newInstance(): BarFragment = BarFragment()
@@ -92,6 +92,9 @@ class BarFragment : BaseFragment() {
 
     private fun getBars() {
         textView_setRadius.text = getString(R.string.main_activity_set_radius, PrefsHelper.read(PrefsHelper.RADIUS, DEFAULT_RADIUS).toString())
-        (viewModel as BarFragmentViewModel).getBars(PrefsHelper.read(PrefsHelper.RADIUS, DEFAULT_RADIUS))
+        val lat = PrefsHelper.read(PrefsHelper.LAT, 0.0).toString()
+        val lon = PrefsHelper.read(PrefsHelper.LON, 0.0).toString()
+        val rad = PrefsHelper.read(PrefsHelper.RADIUS, DEFAULT_RADIUS)
+        (viewModel as BarFragmentViewModel).getBars(rad, lat, lon)
     }
 }

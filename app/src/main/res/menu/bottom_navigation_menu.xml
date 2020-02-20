@@ -3,7 +3,7 @@
     <item
         android:id="@+id/navigation_bar"
         android:icon="@drawable/beer_icon"
-        android:title="Bar List" />
+        android:title="Near You" />
     <item
         android:id="@+id/navigation_map"
         android:icon="@drawable/ic_center_map"
