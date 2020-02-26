@@ -1,6 +1,5 @@
 package com.kfouri.mybeer.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,7 @@ import com.kfouri.mybeer.R
 import com.kfouri.mybeer.network.model.BarModel
 import kotlinx.android.synthetic.main.bar_item.view.*
 
-class BarAdapter : RecyclerView.Adapter<BarAdapter.ViewHolder>(), Filterable {
+class BarAdapter(private val clickListener: (BarModel) -> Unit) : RecyclerView.Adapter<BarAdapter.ViewHolder>(), Filterable {
 
     var barList = ArrayList<BarModel>()
     var barListFull = ArrayList<BarModel>()
@@ -29,7 +28,7 @@ class BarAdapter : RecyclerView.Adapter<BarAdapter.ViewHolder>(), Filterable {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = barList[position]
-        holder.bind(item)
+        holder.bind(item, clickListener)
     }
 
     fun setData(list: ArrayList<BarModel>) {
@@ -39,13 +38,14 @@ class BarAdapter : RecyclerView.Adapter<BarAdapter.ViewHolder>(), Filterable {
     }
 
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-        fun bind(bar: BarModel){
+        fun bind(bar: BarModel,  clickListener: (BarModel) -> Unit){
             itemView.textView_name.text = bar.nombre
             itemView.textView_address.text = bar.direccion
             itemView.textView_city.text = bar.ciudad
             itemView.textView_distance.text = bar.distance.toString() + " Km"
             itemView.imageView_logo.loadUrl(bar.logo)
-            itemView.setOnClickListener { Log.d("Kfouri", "Click")}
+            itemView.textView_rating.text = bar.rating.toString()
+            itemView.setOnClickListener { clickListener(bar)}
         }
 
         private fun ImageView.loadUrl(url: String) {

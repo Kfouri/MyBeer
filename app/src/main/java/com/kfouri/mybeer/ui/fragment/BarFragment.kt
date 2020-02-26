@@ -2,6 +2,7 @@ package com.kfouri.mybeer.ui.fragment
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,16 +15,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kfouri.mybeer.R
 import com.kfouri.mybeer.adapter.BarAdapter
 import com.kfouri.mybeer.databinding.FragmentBarBinding
+import com.kfouri.mybeer.model.ActivityModel
 import com.kfouri.mybeer.network.model.BarModel
+import com.kfouri.mybeer.ui.BarDetailsActivity
+import com.kfouri.mybeer.ui.RegisterUserActivity
 import com.kfouri.mybeer.util.PrefsHelper
 import com.kfouri.mybeer.viewmodel.BarFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_bar.*
 
-const val DEFAULT_RADIUS = 30
+const val DEFAULT_RADIUS = 5
 class BarFragment : BaseFragment() {
 
     private lateinit var binding: FragmentBarBinding
-    private val adapter = BarAdapter()
+    private val adapter = BarAdapter { bar : BarModel -> barItemClicked(bar) }
 
     companion object {
         fun newInstance(): BarFragment = BarFragment()
@@ -96,5 +100,11 @@ class BarFragment : BaseFragment() {
         val lon = PrefsHelper.read(PrefsHelper.LON, 0.0).toString()
         val rad = PrefsHelper.read(PrefsHelper.RADIUS, DEFAULT_RADIUS)
         (viewModel as BarFragmentViewModel).getBars(rad, lat, lon)
+    }
+
+    private fun barItemClicked(bar: BarModel) {
+        val bundle = Bundle()
+        bundle.putSerializable("bar", bar)
+        startActivityModel(ActivityModel(BarDetailsActivity::class.java, bundle))
     }
 }
