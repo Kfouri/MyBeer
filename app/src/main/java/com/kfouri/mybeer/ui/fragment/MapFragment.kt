@@ -1,25 +1,26 @@
 package com.kfouri.mybeer.ui.fragment
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Typeface
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.Target
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -29,12 +30,11 @@ import com.kfouri.mybeer.R
 import com.kfouri.mybeer.databinding.FragmentMapBinding
 import com.kfouri.mybeer.network.model.BarModel
 import com.kfouri.mybeer.util.PrefsHelper
+import com.kfouri.mybeer.util.Utils
+import com.kfouri.mybeer.util.Utils.bitmapDescriptorFromVector
 import com.kfouri.mybeer.viewmodel.BarFragmentViewModel
-import kotlinx.android.synthetic.main.custom_marker.*
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.custom_marker.view.*
-import org.json.JSONException
-import org.json.JSONObject
-
 
 class MapFragment : BaseFragment(), OnMapReadyCallback {
 
@@ -140,7 +140,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
 
         list.forEach { it ->
 
-            val bar = BarModel(0, it.nombre, it.direccion, it.ciudad, it.lat, it.lon, it.logo, it.distance, ArrayList())
+            val bar = BarModel(0, it.nombre, it.direccion, it.ciudad, it.lat, it.lon, it.logo, it.distance, it.rating, it.votes, ArrayList())
 
             val marker = map.addMarker(
                 MarkerOptions()
@@ -155,25 +155,6 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
 
     }
 
-    private fun bitmapDescriptorFromVector(
-        context: Context,
-        vectorResId: Int
-    ): BitmapDescriptor? {
-        val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
-        vectorDrawable!!.setBounds(
-            0,
-            0,
-            vectorDrawable.intrinsicWidth,
-            vectorDrawable.intrinsicHeight
-        )
-        val bitmap = Bitmap.createBitmap(
-            vectorDrawable.intrinsicWidth,
-            vectorDrawable.intrinsicHeight,
-            Bitmap.Config.ARGB_8888
-        )
-        val canvas = Canvas(bitmap)
-        vectorDrawable.draw(canvas)
-        return BitmapDescriptorFactory.fromBitmap(bitmap)
-    }
+
 
 }

@@ -22,14 +22,15 @@ open class BaseFragment : Fragment() {
         viewModel.onCloseActivity().observe(this, Observer { closeActivity() })
     }
 
-    private fun startActivityModel(activityModel: ActivityModel) {
-        activityModel.bundle?.let {
+    protected fun startActivityModel(activityModel: ActivityModel) {
+        if (activityModel.bundle != null) {
+            val intent = Intent(activity, activityModel.activity).putExtras(activityModel.bundle)
             if (activityModel.resultCode > 0) {
-                startActivityForResult(Intent(activity, activityModel.activity), activityModel.resultCode)
+                startActivityForResult(intent, activityModel.resultCode)
             } else {
-                startActivity(Intent(activity, activityModel.activity))
+                startActivity(intent)
             }
-        } ?: run {
+        } else {
             val intent = Intent(activity, activityModel.activity)
             activityModel.bundle?.let { intent.putExtras(it) }
             if (activityModel.resultCode > 0) {

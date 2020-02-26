@@ -1,6 +1,7 @@
 package com.kfouri.mybeer.network.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class BarModel (
     @SerializedName("id") val id: Int,
@@ -11,11 +12,13 @@ data class BarModel (
     @SerializedName("lon") val lon: Double,
     @SerializedName("logo") val logo: String,
     @SerializedName("distance") val distance: Double,
-    @SerializedName("servicios") val servicios: ArrayList<ServicioModel>?)
+    @SerializedName("rating") val rating: Double,
+    @SerializedName("votes") val votes: Long,
+    @SerializedName("servicios") val servicios: ArrayList<ServicioModel>?) : Serializable
 
 data class ServicioModel(@SerializedName("id") var id: String,
                          @SerializedName("descripcion") var descripcion: String,
-                         @SerializedName("icon") var icon: String)
+                         @SerializedName("icon") var icon: String) : Serializable
 
 data class BarBody(@SerializedName("lat") var lat: String,
                    @SerializedName("lon") var lon: String,
