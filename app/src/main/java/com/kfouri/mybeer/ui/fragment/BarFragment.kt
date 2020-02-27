@@ -104,7 +104,7 @@ class BarFragment : BaseFragment() {
 
     private fun barItemClicked(bar: BarModel) {
         val bundle = Bundle()
-        bundle.putSerializable("bar", bar)
+        bundle.putInt("idBar", bar.id)
         startActivityModel(ActivityModel(BarDetailsActivity::class.java, bundle))
     }
 }

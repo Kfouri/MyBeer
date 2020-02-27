@@ -65,7 +65,7 @@ class ProfileFragmentViewModel : BaseViewModel() {
         return when (code) {
             "01" -> R.string.register_user_error_empty_fields
             "02" -> R.string.register_user_error_user_not_exist
-            "03" -> R.string.login_error_email_password_incorrect //No authorizated
+            "03" -> R.string.error_no_authorized
             else -> R.string.register_user_error_server_error
         }
     }

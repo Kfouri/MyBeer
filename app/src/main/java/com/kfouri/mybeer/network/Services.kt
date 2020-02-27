@@ -18,9 +18,15 @@ interface APIService {
     @POST("getBares.php")
     fun getBars(@Body body: BarBody): Observable<ArrayList<BarModel>?>
 
+    @POST("getBar.php")
+    fun getBar(@Body body: BarRequest): Observable<BarModel?>
+
     @POST("addBar.php")
     fun addBar(@Body body: AddBarBody): Observable<AddBarResponse>
 
     @GET("getUser.php")
     fun getUser(@Query("token") token: String): Observable<User>
+
+    @POST("ratingBar.php")
+    fun ratingBar(@Body body: RatingBarBody): Observable<RatingBarResponse>
 }

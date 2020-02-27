@@ -3,6 +3,8 @@
     <string name="app_name">My Beer</string>
     <string name="cancel">Cancelar</string>
 
+    <string name="error_no_authorized">Acceso denegado</string>
+
     <string name="splash_error_permission_denied">Para usar la aplicación debe tener la localización activada</string>
     <string name="splash_error_permission_retry">Reintentar</string>
 
@@ -31,5 +33,8 @@
     <string name="add_bar_create">Crear Bar</string>
     <string name="add_bar_error_get_position">Error al obtener posición</string>
     <string name="add_bar_done">Aceptar</string>
+
+    <string name="rating_bar_successful">Gracias por el voto</string>
+    <string name="rating_cancel">Operación cancelada</string>
 
 </resources>

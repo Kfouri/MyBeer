@@ -66,7 +66,7 @@ class AddBarViewModel : BaseViewModel() {
     fun getErrorText(code: String): Int {
         return when (code) {
             "01" -> R.string.add_bar_error
-            "02" -> R.string.login_error_email_password_incorrect //No authorizated
+            "02" -> R.string.error_no_authorized
             else -> R.string.register_user_error_server_error
         }
     }

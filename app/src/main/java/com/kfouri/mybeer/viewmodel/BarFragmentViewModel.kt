@@ -47,8 +47,8 @@ class BarFragmentViewModel : BaseViewModel() {
 
     fun getErrorText(code: String): Int {
         return when (code) {
-            "01" -> R.string.register_user_error_empty_fields //"Parameters not setted"
-            "02" -> R.string.login_error_email_password_incorrect //No authorizated
+            "01" -> R.string.register_user_error_empty_fields
+            "02" -> R.string.error_no_authorized
             else -> R.string.register_user_error_server_error
         }
     }

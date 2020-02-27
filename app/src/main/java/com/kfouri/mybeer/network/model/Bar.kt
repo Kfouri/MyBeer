@@ -14,6 +14,7 @@ data class BarModel (
     @SerializedName("distance") val distance: Double,
     @SerializedName("rating") val rating: Double,
     @SerializedName("votes") val votes: Long,
+    @SerializedName("myVote") val myVote: Float,
     @SerializedName("servicios") val servicios: ArrayList<ServicioModel>?) : Serializable
 
 data class ServicioModel(@SerializedName("id") var id: String,
@@ -33,3 +34,14 @@ data class AddBarBody(@SerializedName("nombre") val nombre: String,
                       @SerializedName("logo") val logo: String? = null)
 
 data class AddBarResponse(@SerializedName("code") val code: String)
+
+data class RatingBarBody(@SerializedName("id_bar") val id_bar: Int,
+                         @SerializedName("id_user") val id_user: Int,
+                         @SerializedName("value") val value: Float)
+
+data class RatingBarResponse(@SerializedName("code") val code: String)
+
+data class BarRequest(@SerializedName("id_bar") var idBar: Int,
+                      @SerializedName("id_user") var idUser: Int,
+                      @SerializedName("lat") var lat: Double,
+                      @SerializedName("lon") var lon: Double)
