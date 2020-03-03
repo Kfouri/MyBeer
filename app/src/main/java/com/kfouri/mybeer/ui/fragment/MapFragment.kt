@@ -140,7 +140,7 @@ class MapFragment : BaseFragment(), OnMapReadyCallback {
 
         list.forEach { it ->
 
-            val bar = BarModel(0, it.nombre, it.direccion, it.ciudad, it.lat, it.lon, it.logo, it.distance, it.rating, it.votes, it.myVote, ArrayList())
+            val bar = BarModel(0, it.nombre, it.direccion, it.ciudad, it.lat, it.lon, it.logo, it.distance, it.rating, it.votes, it.myVote, 1, ArrayList())
 
             val marker = map.addMarker(
                 MarkerOptions()

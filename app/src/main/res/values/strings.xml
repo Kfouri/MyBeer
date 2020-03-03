@@ -37,4 +37,10 @@
     <string name="rating_bar_successful">Gracias por el voto</string>
     <string name="rating_cancel">Operación cancelada</string>
 
+    <string name="admob_application_id">ca-app-pub-8178489486911148~4237771830</string>
+    <string name="admob_banner_id">ca-app-pub-8178489486911148/7410730086</string>
+    <string name="admob_native_id">ca-app-pub-8178489486911148/2976661058</string>
+    <string name="admob_banner_id_test">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="admob_native_id_test">ca-app-pub-3940256099942544/2247696110</string>
+
 </resources>
