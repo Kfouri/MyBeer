@@ -15,6 +15,7 @@ data class BarModel (
     @SerializedName("rating") val rating: Double,
     @SerializedName("votes") val votes: Long,
     @SerializedName("myVote") val myVote: Float,
+    @SerializedName("type") val type: Int = 1,
     @SerializedName("servicios") val servicios: ArrayList<ServicioModel>?) : Serializable
 
 data class ServicioModel(@SerializedName("id") var id: String,

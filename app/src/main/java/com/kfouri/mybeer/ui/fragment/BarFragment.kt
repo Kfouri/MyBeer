@@ -2,7 +2,6 @@ package com.kfouri.mybeer.ui.fragment
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,22 +11,25 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.MobileAds
 import com.kfouri.mybeer.R
 import com.kfouri.mybeer.adapter.BarAdapter
 import com.kfouri.mybeer.databinding.FragmentBarBinding
 import com.kfouri.mybeer.model.ActivityModel
 import com.kfouri.mybeer.network.model.BarModel
 import com.kfouri.mybeer.ui.BarDetailsActivity
-import com.kfouri.mybeer.ui.RegisterUserActivity
 import com.kfouri.mybeer.util.PrefsHelper
 import com.kfouri.mybeer.viewmodel.BarFragmentViewModel
 import kotlinx.android.synthetic.main.fragment_bar.*
 
 const val DEFAULT_RADIUS = 5
+const val ITEM_PER_AD = 5
+
 class BarFragment : BaseFragment() {
 
     private lateinit var binding: FragmentBarBinding
     private val adapter = BarAdapter { bar : BarModel -> barItemClicked(bar) }
+    private var barAdList =  ArrayList<BarModel>()
 
     companion object {
         fun newInstance(): BarFragment = BarFragment()
@@ -40,6 +42,7 @@ class BarFragment : BaseFragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_bar, container, false)
         binding.viewmodel = viewModel as BarFragmentViewModel
         binding.lifecycleOwner = this
+        MobileAds.initialize(activity) {}
         return binding.root
     }
 
@@ -71,7 +74,15 @@ class BarFragment : BaseFragment() {
     }
 
     private fun getBarList(list: ArrayList<BarModel>) {
-        adapter.setData(list)
+
+        barAdList.addAll(list)
+
+        for (i in barAdList.indices step ITEM_PER_AD) {
+            val adView = BarModel(0, "", "", "", 0.0, 0.0, "", 0.0, 0.0,0, 0F, 2, ArrayList())
+            barAdList.add(i, adView)
+        }
+        adapter.setData(barAdList)
+
     }
 
     fun setFilterAdapter(newText: String?) {
