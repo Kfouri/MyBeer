@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FF6C02</color>
-    <color name="colorPrimaryDark">#FF6C02</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#ffae40</color>
+    <color name="colorPrimaryDark">#ffae40</color>
+    <color name="colorAccent">#FF6C02</color>
     <color name="background_progress">#88000000</color>
 
     <color name="divider">#22000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="beer">#ffae40</color>
 </resources>
