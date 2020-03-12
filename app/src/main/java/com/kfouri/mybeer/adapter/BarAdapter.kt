@@ -47,6 +47,7 @@ class BarAdapter(private val clickListener: (BarModel) -> Unit) : RecyclerView.A
     }
 
     fun setData(list: ArrayList<BarModel>) {
+        barList.clear()
         barList.addAll(list)
         barListFull = ArrayList(list)
         notifyDataSetChanged()
