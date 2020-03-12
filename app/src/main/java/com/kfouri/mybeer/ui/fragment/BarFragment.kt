@@ -74,7 +74,7 @@ class BarFragment : BaseFragment() {
     }
 
     private fun getBarList(list: ArrayList<BarModel>) {
-
+        barAdList.clear()
         barAdList.addAll(list)
 
         for (i in barAdList.indices step ITEM_PER_AD) {
